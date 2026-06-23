@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import {
   CLIENTS, PLANS, ADMIN_USER, money, shortDate, relTime, mrr, totalMrr,
   type Client, type PlanId, type InvoiceStatus, type ActivityEvent,
@@ -549,11 +549,10 @@ export default function App() {
   ]
   const visibleNav = nav.filter((n) => (isAdmin ? n.adminOnly || n.id === 'billing' || n.id === 'activity' || n.id === 'overview' : n.clientOnly))
 
-  const title = useMemo(() => {
-    if (view === 'admin') return 'Admin · All clients'
-    const map: Record<View, string> = { overview: 'Overview', activity: 'Activity', billing: 'Billing', settings: 'Settings', admin: 'Admin' }
-    return map[view]
-  }, [view])
+  const title =
+    view === 'admin'
+      ? 'Admin · All clients'
+      : ({ overview: 'Overview', activity: 'Activity', billing: 'Billing', settings: 'Settings', admin: 'Admin' } as Record<View, string>)[view]
 
   return (
     <div className="min-h-screen bg-canvas text-ink">
